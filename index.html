@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hellow World</title>
+    <style>
+        body {
+            background-color: #232F3E;
+        }
+
+        label,
+        button {
+            color: #FF9900;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            margin-left: 40px;
+        }
+
+        input {
+            color: #232F3E;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            margin-left: 20px;
+        }
+    </style>
+    <script>
+        let callApi = (firstName, lastName) => {
+            let headers = new Headers();
+            headers.append('Content-Type', 'application/json');
+            
+            let raw = JSON.stringify({ firstName, lastName });
+
+            let requestOptions = {
+                method: 'POST',
+                headers,
+                body: raw,
+                redirect: 'follow'
+            }
+
+            fetch('https://udzx1ool3j.execute-api.us-east-1.amazonaws.com/dev', requestOptions)
+                .then(response => response.text())
+                .then(result => alert(JSON.parse(result).body))
+                .catch(error => console.error('ERROR', error));
+        }
+    </script>
+</head>
+
+<body>
+    <form>
+        <label>First Name :</label>
+        <input type="text" id="fName">
+
+        <label>Last Name :</label>
+        <input type="text" id="lName">
+
+        <button type="button">Call API</button>
+    </form>
+
+    <script>
+        const inputFirstName = document.getElementById('fName');
+        const inputLastName = document.getElementById('lName');
+        const button = document.querySelector('button');
+
+        button.onclick = (e) => callApi(inputFirstName.value, inputLastName.value);
+    </script>
+</body>
+
+</html>
